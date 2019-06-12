@@ -1,1 +1,7 @@
-
+<%= @user.username %>
+<p> This user has commented on the following posts: <p>
+<ul>
+<% @posts.each do |post| %>
+    <li>Post Title: <%= link_to(post[1], post_path(post[0]))%></li>
+    <%end%>
+</ul>

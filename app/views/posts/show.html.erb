@@ -1,1 +1,35 @@
 
+<p> Title : <%= @post.title %> </p>
+<p> Content : <%= @post.content %> </p>
+<br>
+<p> Categories: </p>
+<ul>
+<% @post.categories.each do |category| %>
+    <li><%= category.name %></li>
+<% end %>
+</ul>
+<br>
+<p>Comments:</p>
+<% @post.comments.each do |comment| %>
+    <p><%= comment.user.username %> says: <%= comment.content %></p>
+    <hr>
+<% end %>
+<p> The following users have contributed comments: </p>
+<ul>
+<% @users.each do |user| %>
+    <li><%=link_to(user[1], user_path(user[0]))%></li>
+<% end %>
+</ul>
+<p> Would you like to add a comment? </p>
+<%=form_for @comment do |f| %>
+    <%= f.hidden_field :post_id, value: @post.id %>
+    <%= f.label "Commenting User(existing):" %><br>
+    <%= f.collection_select :user_id, @all_users, :id, :username%><br>
+    <%= f.label "Create a new Commenting User:" %><br>
+     <%= f.fields_for :user_attributes, @post.users.build do |comment_user| %>
+        <%= comment_user.text_field :username %>
+        <% end %><br>
+    <%= f.label "Content:" %><br>
+    <%= f.text_area :content %><br>
+    <%= f.submit %>
+<%end%>
