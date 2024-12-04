@@ -1,0 +1,7 @@
+<%= @category.name %>
+<p>The following posts belong to this category:</>
+<ul>
+<% @posts.each do |post| %>
+    <li><%=link_to(post[1], post_path(post[0]))%></li>
+<% end %>
+</ul>
